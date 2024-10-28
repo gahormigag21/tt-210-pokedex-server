@@ -18,9 +18,9 @@ app.get("/", (req,res)=>{
 app.use("/api/pokemon",pokemonRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
-    .then(console.log("Conectado a la base de datos"))
-    .catch(err=> console.error("No se pudo conectar a MongoDB", err.message))
+    .then(console.log("Conected to DB"))
+    .catch(err=> console.error("Could not connect to MongoDB", err.message))
 
 app.listen(port, ()=>{
-    console.log(`Escuchando el puerto ${port}`)
+    console.log(`Listening to port ${port}`)
 })
