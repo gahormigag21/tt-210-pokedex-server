@@ -1,4 +1,6 @@
 const Pokemon = require('../models/pokemon')
+const {fetchPokemon} = require("../services/fetch")
+
 
 exports.viewPokemonById = async(req,res)=>{
     try {
@@ -18,7 +20,10 @@ exports.viewPokemonById = async(req,res)=>{
         if(pokemon.in_team==pokemon_status_inTeam && pokemon.view==pokemon_status_view && pokemon.catch == pokemon_status_catch){
             pokemon.view = true
             await pokemon.save()
-            res.status(200).json(pokemon)
+
+            const pokemonData = await fetchPokemon(pokemonID,pokemon)
+            return res.status(200).json(pokemonData)
+
         }else{
             res.status(400).json({message:"Bad pokemon status"})
         }
@@ -49,7 +54,8 @@ exports.catchPokemonById = async(req,res)=>{
             if(pokemon.in_team==pokemon_status_inTeam && pokemon.view==pokemon_status_view && pokemon.catch == pokemon_status_catch){
                 pokemon.catch = true
                 await pokemon.save()
-                res.status(200).json(pokemon)
+                const pokemonData = await fetchPokemon(pokemonID,pokemon)
+                return res.status(200).json(pokemonData)
             }else{
                 res.status(400).json({message:"Bad pokemon status"})
             }
@@ -78,7 +84,8 @@ exports.inTeamPokemonById = async(req,res)=>{
             if(pokemon.in_team==pokemon_status_inTeam && pokemon.view==pokemon_status_view && pokemon.catch == pokemon_status_catch){
                 pokemon.in_team = !pokemon_status_inTeam
                 await pokemon.save()
-                res.status(200).json(pokemon)
+                const pokemonData = await fetchPokemon(pokemonID,pokemon)
+                return res.status(200).json(pokemonData)
             }else{
                 res.status(400).json({message:"Bad pokemon status"})
             }
